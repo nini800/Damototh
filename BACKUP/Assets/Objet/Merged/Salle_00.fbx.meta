@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: de24df1727199f9498dcffd1a274773e
+timeCreated: 1525267952
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Cage_0
+    100002: Fenetres_0
+    100004: Murs_0_1
+    100006: Murs_0_2
+    100008: Murs_0_3
+    100010: Passages_0
+    100012: Plafond_0
+    100014: Plaintes_0_1
+    100016: Plaintes_0_2
+    100018: Plaintes_0_5
+    100020: Porte_0_1
+    100022: Porte_0_2
+    100024: Portes_0
+    100026: //RootNode
+    100028: Sol_0
+    400000: Cage_0
+    400002: Fenetres_0
+    400004: Murs_0_1
+    400006: Murs_0_2
+    400008: Murs_0_3
+    400010: Passages_0
+    400012: Plafond_0
+    400014: Plaintes_0_1
+    400016: Plaintes_0_2
+    400018: Plaintes_0_5
+    400020: Porte_0_1
+    400022: Porte_0_2
+    400024: Portes_0
+    400026: //RootNode
+    400028: Sol_0
+    2100000: Metal
+    2100002: Mute_carreaux
+    2100004: lambert1
+    2100006: mur_clean
+    2100008: Beton
+    2300000: Cage_0
+    2300002: Fenetres_0
+    2300004: Murs_0_1
+    2300006: Murs_0_2
+    2300008: Murs_0_3
+    2300010: Passages_0
+    2300012: Plafond_0
+    2300014: Plaintes_0_1
+    2300016: Plaintes_0_2
+    2300018: Plaintes_0_5
+    2300020: Porte_0_1
+    2300022: Porte_0_2
+    2300024: Portes_0
+    2300026: Sol_0
+    3300000: Cage_0
+    3300002: Fenetres_0
+    3300004: Murs_0_1
+    3300006: Murs_0_2
+    3300008: Murs_0_3
+    3300010: Passages_0
+    3300012: Plafond_0
+    3300014: Plaintes_0_1
+    3300016: Plaintes_0_2
+    3300018: Plaintes_0_5
+    3300020: Porte_0_1
+    3300022: Porte_0_2
+    3300024: Portes_0
+    3300026: Sol_0
+    4300000: Porte_0_2
+    4300002: Porte_0_1
+    4300004: Plaintes_0_1
+    4300006: Plafond_0
+    4300008: Fenetres_0
+    4300010: Murs_0_2
+    4300012: Murs_0_3
+    4300014: Murs_0_1
+    4300016: Passages_0
+    4300018: Plaintes_0_2
+    4300020: Sol_0
+    4300022: Portes_0
+    4300024: Plaintes_0_5
+    4300026: Cage_0
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
