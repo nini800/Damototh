@@ -100,7 +100,9 @@ public class p_AttackController : p_Base
         }
         catch { Debug.LogError("No Prefab Found !"); }
 
+        SendMessage("OnAttackStart", attack);
         yield return new WaitForSeconds(attack.AttackTime);
+        SendMessage("OnAttackStop", attack);
 
         attackState = e_AttackState.Recovering;
         yield return new WaitForSeconds(attack.RecoverTime);

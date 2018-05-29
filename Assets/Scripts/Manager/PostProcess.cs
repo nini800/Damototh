@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PostProcessing;
 
 public class PostProcess : MonoBehaviour 
 {
@@ -45,11 +44,12 @@ public class PostProcess : MonoBehaviour
 
     public static float fovOffset { get { return Instance.transitionFov; } }
 
+    /*
     PostProcessingProfile oProfile;
     PostProcessingProfile profile;
     VignetteModel.Settings oVignetteSettings;
 
-
+    */
 
     static float mutilateProgress = 0f;
     static float madnessProgress = 0f, oldMadnessProgress = 0f;
@@ -126,7 +126,7 @@ public class PostProcess : MonoBehaviour
     {
         Instance = this;
         PB = FindObjectOfType<p_PlayerBeing>();
-        oProfile = GetComponent<PostProcessingBehaviour>().profile;
+        /*oProfile = GetComponent<PostProcessingBehaviour>().profile;
 
         profile = new PostProcessingProfile();
         profile.vignette.enabled = oProfile.vignette.enabled;
@@ -148,17 +148,17 @@ public class PostProcess : MonoBehaviour
         profile.depthOfField.enabled = oProfile.depthOfField.enabled;
         profile.depthOfField.settings = oProfile.depthOfField.settings;
 
-        GetComponent<PostProcessingBehaviour>().profile = profile;
+        GetComponent<PostProcessingBehaviour>().profile = profile;*/
     }
 
-    VignetteModel.Settings vignetteSettings;
+    /*VignetteModel.Settings vignetteSettings;
     ColorGradingModel.Settings colorGradingSettings;
     ChromaticAberrationModel.Settings chromaticSettings;
-    DepthOfFieldModel.Settings depthOfFieldSettings;
+    DepthOfFieldModel.Settings depthOfFieldSettings;*/
 
     private void Update()
     {
-        vignetteSettings = profile.vignette.settings;
+        /*vignetteSettings = profile.vignette.settings;
         vignetteSettings.intensity = oProfile.vignette.settings.intensity + MutilateVignette + LockVignette;
         profile.vignette.settings = vignetteSettings;
 
@@ -174,7 +174,7 @@ public class PostProcess : MonoBehaviour
 
         chromaticSettings = profile.chromaticAberration.settings;
         chromaticSettings.intensity = oProfile.chromaticAberration.settings.intensity + transitionChromatic + ChromaticVariation;
-        profile.chromaticAberration.settings = chromaticSettings;
+        profile.chromaticAberration.settings = chromaticSettings;*/
 
         if (oldMadnessProgress <= euphoriaThreshold && madnessProgress > euphoriaThreshold)
         {
@@ -229,15 +229,15 @@ public class PostProcess : MonoBehaviour
 
     public static void DarkenAndBlur(bool activate)
     {
-        Instance.profile.depthOfField.enabled = activate;
+       /* Instance.profile.depthOfField.enabled = activate;
         Instance.colorGradingSettings = Instance.profile.colorGrading.settings;
         Instance.colorGradingSettings.basic.postExposure = activate ? -darkenForce : 0;
-        Instance.profile.colorGrading.settings = Instance.colorGradingSettings;
+        Instance.profile.colorGrading.settings = Instance.colorGradingSettings;*/
     }
 
     IEnumerator BlackFadeCoroutine()
     {
-        colorGradingSettings = profile.colorGrading.settings;
+        /*colorGradingSettings = profile.colorGrading.settings;
         float count = 0f, maxTime = 3f;
         while (count < maxTime)
         {
@@ -246,6 +246,8 @@ public class PostProcess : MonoBehaviour
             yield return new WaitForEndOfFrame();
             count += Time.deltaTime;
 
-        }
+        }*/
+
+        yield return null;
     }
 }

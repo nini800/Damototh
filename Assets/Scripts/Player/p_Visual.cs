@@ -9,6 +9,16 @@ public class p_Visual : p_Base
     float curAngle = 0f;
     float stepOffset = 0f;
 
+    MeleeWeaponTrail attackTrail;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        attackTrail = Visual.GetComponentInChildren<MeleeWeaponTrail>();
+        attackTrail.Emit = false;
+    }
+
     protected void FixedUpdate()
     {
         stepOffset = Utilities.SubtractFloat(stepOffset, stepSpeed * Time.fixedDeltaTime * 50f, 0, true);
@@ -157,5 +167,13 @@ public class p_Visual : p_Base
         PlayAnimation("Esquive", 0.1f);
     }
 
+    void OnAttackStart(PlayerAttackStats attack)
+    {
+        attackTrail.Emit = true;
+    }
 
+    void OnAttackStop(PlayerAttackStats attack)
+    {
+        attackTrail.Emit = false;
+    }
 }
