@@ -1,0 +1,204 @@
+fileFormatVersion: 2
+guid: 2daa1d6a1ab7507408c1695811622078
+timeCreated: 1525432431
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: polySurface40
+    100002: Porte_gond_bas_low
+    100004: Porte_gond_bas_low1
+    100006: Porte_gond_bas_low2
+    100008: Porte_gond_bas_low3
+    100010: Porte_gond_bas_low4
+    100012: Porte_gond_bas_low5
+    100014: Porte_gond_haut_low
+    100016: Porte_gond_haut_low1
+    100018: Porte_gond_haut_low2
+    100020: Porte_gond_haut_low3
+    100022: Porte_gond_haut_low4
+    100024: Porte_gond_haut_low5
+    100026: Porte_grande_arche_low1
+    100028: Porte_low1
+    100030: Porte_low2
+    100032: //RootNode
+    100034: Porte_petite_arche_low
+    100036: Porte_pilier_low1
+    100038: Porte_pilier_low2
+    100040: Porte_pilier_separation_low
+    100042: Porte_pilier_separation_low1
+    100044: Porte_pilier_separation_low2
+    100046: Porte_pilier_separation_low3
+    400000: polySurface40
+    400002: Porte_gond_bas_low
+    400004: Porte_gond_bas_low1
+    400006: Porte_gond_bas_low2
+    400008: Porte_gond_bas_low3
+    400010: Porte_gond_bas_low4
+    400012: Porte_gond_bas_low5
+    400014: Porte_gond_haut_low
+    400016: Porte_gond_haut_low1
+    400018: Porte_gond_haut_low2
+    400020: Porte_gond_haut_low3
+    400022: Porte_gond_haut_low4
+    400024: Porte_gond_haut_low5
+    400026: Porte_grande_arche_low1
+    400028: Porte_low1
+    400030: Porte_low2
+    400032: //RootNode
+    400034: Porte_petite_arche_low
+    400036: Porte_pilier_low1
+    400038: Porte_pilier_low2
+    400040: Porte_pilier_separation_low
+    400042: Porte_pilier_separation_low1
+    400044: Porte_pilier_separation_low2
+    400046: Porte_pilier_separation_low3
+    2100000: lambert1
+    2100002: lambert6
+    2300000: Porte_gond_bas_low
+    2300002: Porte_gond_bas_low1
+    2300004: Porte_gond_bas_low2
+    2300006: Porte_gond_bas_low3
+    2300008: Porte_gond_bas_low4
+    2300010: Porte_gond_bas_low5
+    2300012: Porte_gond_haut_low
+    2300014: Porte_gond_haut_low1
+    2300016: Porte_gond_haut_low2
+    2300018: Porte_gond_haut_low3
+    2300020: Porte_gond_haut_low4
+    2300022: Porte_gond_haut_low5
+    2300024: Porte_grande_arche_low1
+    2300026: Porte_low1
+    2300028: Porte_low2
+    2300030: Porte_petite_arche_low
+    2300032: Porte_pilier_low1
+    2300034: Porte_pilier_low2
+    2300036: Porte_pilier_separation_low
+    2300038: Porte_pilier_separation_low1
+    2300040: Porte_pilier_separation_low2
+    2300042: Porte_pilier_separation_low3
+    3300000: Porte_gond_bas_low
+    3300002: Porte_gond_bas_low1
+    3300004: Porte_gond_bas_low2
+    3300006: Porte_gond_bas_low3
+    3300008: Porte_gond_bas_low4
+    3300010: Porte_gond_bas_low5
+    3300012: Porte_gond_haut_low
+    3300014: Porte_gond_haut_low1
+    3300016: Porte_gond_haut_low2
+    3300018: Porte_gond_haut_low3
+    3300020: Porte_gond_haut_low4
+    3300022: Porte_gond_haut_low5
+    3300024: Porte_grande_arche_low1
+    3300026: Porte_low1
+    3300028: Porte_low2
+    3300030: Porte_petite_arche_low
+    3300032: Porte_pilier_low1
+    3300034: Porte_pilier_low2
+    3300036: Porte_pilier_separation_low
+    3300038: Porte_pilier_separation_low1
+    3300040: Porte_pilier_separation_low2
+    3300042: Porte_pilier_separation_low3
+    4300000: Porte_gond_bas_low
+    4300002: Porte_gond_haut_low
+    4300004: Porte_pilier_separation_low
+    4300006: Porte_pilier_separation_low1
+    4300008: Porte_pilier_separation_low2
+    4300010: Porte_pilier_separation_low3
+    4300012: Porte_gond_bas_low1
+    4300014: Porte_gond_haut_low1
+    4300016: Porte_gond_bas_low2
+    4300018: Porte_gond_haut_low2
+    4300020: Porte_gond_bas_low3
+    4300022: Porte_gond_haut_low3
+    4300024: Porte_gond_bas_low4
+    4300026: Porte_gond_haut_low4
+    4300028: Porte_gond_bas_low5
+    4300030: Porte_gond_haut_low5
+    4300032: Porte_petite_arche_low
+    4300034: Porte_grande_arche_low1
+    4300036: Porte_pilier_low1
+    4300038: Porte_low1
+    4300040: Porte_pilier_low2
+    4300042: Porte_low2
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
