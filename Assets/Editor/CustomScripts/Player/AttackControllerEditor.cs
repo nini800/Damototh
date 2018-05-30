@@ -10,7 +10,7 @@ public class AttackControllerEditor : Editor
     public override void OnInspectorGUI()
     {
         p_AttackController ac = (p_AttackController)target;
-        EditorGUIUtility.labelWidth = 275;
+        EditorGUIUtility.labelWidth = 200;
         EditorGUILayout.LabelField("Attacks", EditorStyles.boldLabel); 
 
         ac.attackState = (p_AttackController.e_AttackState)EditorGUILayout.EnumPopup("Attack State", ac.attackState);

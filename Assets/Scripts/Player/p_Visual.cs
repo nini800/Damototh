@@ -84,16 +84,16 @@ public class p_Visual : p_Base
                 switch (AC.CurrentAttack.Name)
                 {
                     case "Light_1":
-                        PlayAnimation("Attaque1", 0.1f);
+                        PlayAnimation("Attaque1", 0.1f, true);
                         break;
                     case "Light_1_1":
-                        PlayAnimation("Attaque2", 0.1f);
+                        PlayAnimation("Attaque2", 0.1f, true);
                         break;
                     case "Light_1_1_1":
-                        PlayAnimation("Attaque3", 0.1f);
+                        PlayAnimation("Attaque3", 0.1f, true);
                         break;
                     case "Sprinting_Heavy_1":
-                        PlayAnimation("Attaque3", 0.3f);
+                        PlayAnimation("Attaque3", 0.3f, true);
                         break;
                 }
             }
@@ -149,22 +149,25 @@ public class p_Visual : p_Base
     }
 
 
-    void PlayAnimation(string stateName, float crossFade = 0.2f)
+    void PlayAnimation(string stateName, float crossFade = 0.2f, bool fromStart = false)
     {
-        if (anim.GetNextAnimatorStateInfo(0).IsName(stateName) || anim.GetCurrentAnimatorStateInfo(0).IsName(stateName))
+        if ((anim.GetNextAnimatorStateInfo(0).IsName(stateName) || anim.GetCurrentAnimatorStateInfo(0).IsName(stateName)) && !fromStart)
             return;
 
-        anim.CrossFadeInFixedTime(stateName, crossFade, 0);
+        if (!fromStart)
+            anim.CrossFadeInFixedTime(stateName, crossFade, 0);
+        else
+            anim.CrossFadeInFixedTime(stateName, crossFade, 0, 0, 0);
     }
 
     void OnJump()
     {
-        PlayAnimation("Esquive", 0.1f);
+        PlayAnimation("Esquive", 0.1f, true);
     }
 
     void OnDash()
     {
-        PlayAnimation("Esquive", 0.1f);
+        PlayAnimation("Esquive", 0.1f, true);
     }
 
     void OnAttackStart(PlayerAttackStats attack)

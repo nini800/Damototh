@@ -12,7 +12,7 @@ public class e_GuardAI : e_EnemyAI
     {
         if (targetBody == null && path != null)
         {
-            Agent.SetDestination(path.GetNodePosition(currentPathNode));
+            SetDestination(path.GetNodePosition(currentPathNode));
 
             if (Vector3.Distance(Body.position, path.GetNodePosition(currentPathNode)) <= Agent.stoppingDistance)
                 currentPathNode++;
