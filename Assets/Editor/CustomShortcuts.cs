@@ -29,4 +29,13 @@ public class CustomShortcuts : MonoBehaviour {
     {
         EditorApplication.ExecuteMenuItem("Edit/Project Settings/Graphics");
     }
+
+    [MenuItem("Edit/Custom Shortcuts/DoubleSided _#%r")]
+    static void DoubleSided()
+    {
+        foreach (MeshRenderer rend in Selection.gameObjects[0].GetComponentsInChildren<MeshRenderer>())
+        {
+            rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
+        }
+    }
 }
