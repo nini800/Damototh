@@ -84,16 +84,16 @@ public class p_Visual : p_Base
                 switch (AC.CurrentAttack.Name)
                 {
                     case "Light_1":
-                        PlayAnimation("Attaque1", 0.1f, true);
+                        PlayAnimation("Attaque1", 0.1f);
                         break;
                     case "Light_1_1":
-                        PlayAnimation("Attaque2", 0.1f, true);
+                        PlayAnimation("Attaque2", 0.1f);
                         break;
                     case "Light_1_1_1":
-                        PlayAnimation("Attaque3", 0.1f, true);
+                        PlayAnimation("Attaque3", 0.1f);
                         break;
                     case "Sprinting_Heavy_1":
-                        PlayAnimation("Attaque3", 0.3f, true);
+                        PlayAnimation("Attaque3", 0.3f);
                         break;
                 }
             }

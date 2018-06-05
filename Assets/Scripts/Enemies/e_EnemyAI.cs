@@ -29,12 +29,10 @@ public class e_EnemyAI : e_Base
     }
     [Header("Movements")]
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float rotationSpeed;
     [SerializeField] protected float autoBrake;
-    [SerializeField] protected float targetDistance;
-    [SerializeField] protected float targetDistanceLaxism;
+    [SerializeField] protected float maxTargetDistance;
     [Header("Attacks")]
-    [SerializeField] protected float minAttackWait;
-    [SerializeField] protected float maxAttackWait;
     [SerializeField] protected EnemyAttackStats[] attacks;
     [Header("Others")]
     [SerializeField] protected HostilityType hostility;
@@ -46,6 +44,7 @@ public class e_EnemyAI : e_Base
     public AttackState CurAttackState { get { return curAttackState; } }
     public WeaponTypeEnum WeaponType { get { return weaponType; } }
     protected bool grounded = false;
+    protected EnemyAttackStats currentAttack;
 
     public float DistFromTarget { get { return (Body.position - targetBody.position.SetY(Body.position.y)).magnitude; } }
     public Vector3 ForwardTarget { get { return (targetBody.position.SetY(Body.position.y) - Body.position).normalized; } }
@@ -54,7 +53,15 @@ public class e_EnemyAI : e_Base
 
     protected float lastAttackTime;
 
-	protected virtual void Update ()
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Agent.speed = moveSpeed;
+        Agent.updateRotation = false;
+    }
+
+    protected virtual void Update ()
     {
         grounded = Physics.OverlapSphere(FeetColl.transform.position + FeetColl.center, FeetColl.radius, Game_NG.GroundLayerMask).Length > 0;
     }
@@ -74,37 +81,45 @@ public class e_EnemyAI : e_Base
 
                 if (behaviour != BehaviourType.Immobile)
                 {
-                    CheckAround(targetDistance);
                     SetDestination(Body.position);
+                    CheckAround(maxTargetDistance);
                 }
 
                 return;
             }
 
+
             switch (curAttackState)
             {
                 case AttackState.Normal:
                     //Move part
-                    if (DistFromTarget > targetDistance + targetDistanceLaxism * 0.5f)
-                        SetDestination(targetBody.position - ForwardTarget * targetDistance);
-                    else if (DistFromTarget < targetDistance - targetDistanceLaxism * 0.5f)
-                        SetDestination(targetBody.position - ForwardTarget * targetDistance);
+                    if (DistFromTarget > maxTargetDistance)
+                    {
+                        SetDestination(targetBody.position);
+                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0)), rotationSpeed);
+                    }
                     else
                     {
                         Agent.SetDestination(Body.position);
+                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
                         StartCoroutine("AttackCoroutine");
-                    }
 
-                    //Update coll
-                    BodyColl.transform.position = Body.position + Visual.forward * (BodyColl.transform.localPosition.SetY(0).magnitude) + Vector3.up * BodyColl.height * 0.5f;
+                        if (currentAttack == null)
+                            SetDestination(targetBody.position);
+                    }
                     break;
                 case AttackState.Casting:
+                    Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
                     Agent.SetDestination(Body.position);
                     break;
                 case AttackState.Attacking:
+                    Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
                     Agent.SetDestination(Body.position);
                     break;
             }
+
+            //Update coll
+            BodyColl.transform.position = Body.position + Visual.forward * (BodyColl.transform.localPosition.SetY(0).magnitude) + Vector3.up * BodyColl.height * 0.5f;
         }
     }
 
@@ -117,30 +132,31 @@ public class e_EnemyAI : e_Base
 
     protected IEnumerator AttackCoroutine()
     {
-        EnemyAttackStats attack = GetRandomAttack();
-        if (attack != null)
+        currentAttack = GetRandomAttack();
+        if (currentAttack != null)
         {
-            StartCoroutine("ImpulsesCoroutine", attack.impulses);
+            StartCoroutine("ImpulsesCoroutine", currentAttack.impulses);
 
             curAttackState = AttackState.Casting;
-            yield return new WaitForSeconds(Random.Range(minAttackWait, maxAttackWait) + attack.castTime);
+            yield return new WaitForSeconds(currentAttack.castTime);
 
             curAttackState = AttackState.Attacking;
             try
             {
-                GameObject o = Instantiate(attack.attackModel, Body.position, Visual.rotation, transform);
+                GameObject o = Instantiate(currentAttack.attackModel, Body.position, Visual.rotation, transform);
                 AttackObject ao = o.GetComponent<AttackObject>();
-                ao.Initialize(new HitInfos(EB, attack));
+                ao.Initialize(new HitInfos(EB, currentAttack));
             }
             catch { Debug.LogError("No Prefab Found !"); }
 
-            attack.lastAttackTime = Time.time;
+            currentAttack.lastAttackTime = Time.time;
 
-            yield return new WaitForSeconds(attack.attackTime);
+            yield return new WaitForSeconds(currentAttack.attackTime);
 
             curAttackState = AttackState.Recover;
-            yield return new WaitForSeconds(attack.recoverTime);
+            yield return new WaitForSeconds(currentAttack.recoverTime);
 
+            currentAttack = null;
             curAttackState = AttackState.Normal;
         }
     }
@@ -168,9 +184,12 @@ public class e_EnemyAI : e_Base
         float totalFrequency = 0;
         for (int i = 0; i < attacks.Length; i++)
         {
+            print(Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).normalized.ToXZ()));
             if (attacks[i].minHealthPercent <= LB.CurHealth/LB.MaxHealth*100 &&
                 attacks[i].maxHealthPercent >= LB.CurHealth/LB.MaxHealth*100 &&
-                attacks[i].lastAttackTime + attacks[i].attackCooldown < Time.time)
+                attacks[i].lastAttackTime + attacks[i].attackCooldown < Time.time &&
+                attacks[i].minDistance >= Vector3.Distance(targetBody.position, Body.position) &&
+                attacks[i].minAngle >= Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).normalized.ToXZ()))
             {
                 totalFrequency += attacks[i].frequency;
                 possibleAttacks.Add(attacks[i]);
@@ -193,17 +212,16 @@ public class e_EnemyAI : e_Base
         return null;
     }
 
-    protected void CheckAround(float radius)
+    protected void CheckAround(float maxRadius)
     {
         Collider[] colls;
-        if ((colls = Physics.OverlapSphere(Body.position, radius, Game_NG.BeingLayerMask)).Length > 0)
+        if ((colls = Physics.OverlapSphere(Body.position, maxRadius, Game_NG.BeingLayerMask)).Length > 0)
         {
             for (int i = 0; i < colls.Length; i++)
             {
                 if (colls[i].GetComponentInParent<LivingBeing>().Faction_ != EB.Faction_)
                 {
-                    Debug.Log("b" + colls[i].name);
-                    SetTarget(colls[0].GetComponentInParent<p_Base>().Body);
+                    SetTarget(colls[0].GetComponentInParent<Thing_Base>().Body);
                     return;
                 }
             }

@@ -141,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4571263771944794}
   m_Layer: 12
-  m_Name: GameObject
+  m_Name: TrailBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,7 +459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4438325828280600}
   m_Layer: 12
-  m_Name: GameObject (1)
+  m_Name: TrailTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1933,7 +1933,7 @@ Transform:
   m_GameObject: {fileID: 1264079624115512}
   m_LocalRotation: {x: -0.00000007078049, y: -0.00000005215405, z: -0.000000029802312,
     w: 1}
-  m_LocalPosition: {x: -132, y: 1336, z: 0}
+  m_LocalPosition: {x: -120.4, y: 1388, z: 38}
   m_LocalScale: {x: 0.99852884, y: 0.99852765, z: 0.9985291}
   m_Children: []
   m_Father: {fileID: 4165522050935406}
@@ -1999,7 +1999,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035035059601718}
-  m_LocalRotation: {x: 0.015385907, y: 4.9332635e-17, z: -9.280303e-17, w: 0.9998816}
+  m_LocalRotation: {x: 0.015385907, y: 4.9332843e-17, z: -9.280325e-17, w: 0.9998816}
   m_LocalPosition: {x: -0, y: 7.7369843, z: -0.61668193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2123,13 +2123,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063296687224246}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -153, y: 412, z: 0}
+  m_LocalRotation: {x: 0.00000003911567, y: -0.0000000074505677, z: 0.02693009, w: -0.99963737}
+  m_LocalPosition: {x: -137.37512, y: 412.4383, z: 37.99943}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4165522050935406}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.0860002}
 --- !u!4 &4588439225981994
 Transform:
   m_ObjectHideFlags: 1
@@ -2704,6 +2704,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 8d20b31aec4b0b64097d3cb488880de0, type: 2}
   - {fileID: 2100000, guid: fade3c9cbdcb2b34d847fcdd2dd0676a, type: 2}
@@ -2779,6 +2780,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114041890314370418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2973,7 +2975,7 @@ MonoBehaviour:
     fold: 1
     comboFold: 1
     impulseFold: 1
-  attackFold: 0
+  attackFold: 1
   lockRange: 20
   mutilateCastTime: 1
   mutilateHealthCost: 25
@@ -3135,6 +3137,7 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: a85febdf61b38ba46bc23aba36f14d3c, type: 2}
   _lifeTime: 0.2
   _colors:
+  - {r: 1, g: 1, b: 1, a: 0}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 0}
   _sizes:
@@ -3228,6 +3231,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 8d20b31aec4b0b64097d3cb488880de0, type: 2}
   m_StaticBatchInfo:
@@ -3296,6 +3300,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 8d20b31aec4b0b64097d3cb488880de0, type: 2}
   m_StaticBatchInfo:
