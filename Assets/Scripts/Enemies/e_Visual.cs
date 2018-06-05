@@ -12,23 +12,10 @@ public class e_Visual : e_Base
         Visual.rotation = Body.rotation;
     }
 
-    void OnTakeHit()
+    protected virtual void OnTakeHit()
     {
-        if (GetComponent<e_VirgoAI>())
-        {
-            if (GetComponent<e_VirgoAI>().CurVirgoState == e_VirgoAI.VirgoState.Discovered)
-            {
-                anim.Play("Switch", 0, 0.75f);
-                StopCoroutine("TakeHitColorCoroutine");
-                StartCoroutine("TakeHitColorCoroutine");
-            }
-        }
-        else
-        {
-            anim.Play("Switch", 0, 0.75f);
-            StopCoroutine("TakeHitColorCoroutine");
-            StartCoroutine("TakeHitColorCoroutine");
-        }
+        StopCoroutine("TakeHitColorCoroutine");
+        StartCoroutine("TakeHitColorCoroutine");
     }
 
     IEnumerator TakeHitColorCoroutine()

@@ -16,7 +16,7 @@ public class p_Visual : p_Base
         base.Awake();
 
         attackTrail = Visual.GetComponentInChildren<MeleeWeaponTrail>();
-        attackTrail.Emit = false;
+        //attackTrail.Emit = false;
     }
 
     protected void FixedUpdate()
@@ -71,6 +71,9 @@ public class p_Visual : p_Base
     }
     protected void AnimationHandler()
     {
+        PlayAnimation("Idle", 0.4f);
+        return;
+
         if (MovementState != p_MovementController.e_MovementState.Climbing)
         {
             float curSpeed = MC.MoveInput.magnitude;
@@ -78,7 +81,7 @@ public class p_Visual : p_Base
             anim.SetFloat("AnimSpeed", curSpeed + 1);
 
             if (PB.CurLivingState == LivingBeing.LivingState.Stunned)
-                PlayAnimation("Stand", 0.4f);
+                PlayAnimation("Idle", 0.4f);
             else if (AC.CurrentAttack != null && (AttackState != p_AttackController.e_AttackState.Recovering))
             {
                 switch (AC.CurrentAttack.Name)
@@ -100,7 +103,7 @@ public class p_Visual : p_Base
             else if (!Dashing && Grounded)
             {
                 if (curSpeed <= 0)
-                    PlayAnimation("Stand", 0.4f);
+                    PlayAnimation("Idle", 0.4f);
                 else if (!Sprinting)
                     PlayAnimation("Trotinne", 0.4f);
                 else
@@ -110,7 +113,7 @@ public class p_Visual : p_Base
         else
         {
             if (PB.CurLivingState == LivingBeing.LivingState.Normal)
-                PlayAnimation("Stand", 0.4f);
+                PlayAnimation("Idle", 0.4f);
             else
                 PlayAnimation("Trotinne", 0.4f);
         }

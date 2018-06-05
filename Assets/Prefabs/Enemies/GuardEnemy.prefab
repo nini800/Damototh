@@ -149,7 +149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304790046026788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37, y: -14.83, z: -24.05}
+  m_LocalPosition: {x: 37, y: -14.83, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4256973840587884}
@@ -286,8 +286,6 @@ MonoBehaviour:
   rotationSpeed: 5
   autoBrake: 1
   maxTargetDistance: 7
-  minAttackWait: 0
-  maxAttackWait: 1
   attacks:
   - attackName: Normal Attack
     damages: 10
@@ -313,7 +311,7 @@ MonoBehaviour:
     maxHealthPercent: 100
     minDistance: 1.75
     minAngle: 5
-    attackCooldown: 0
+    attackCooldown: 2
   hostility: 0
   curAttackState: 0
   weaponType: 1
@@ -344,8 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   livingState: 0
   faction: 2
-  maxHealth: 40
-  startHealth: 40
+  maxHealth: 1974.1
+  startHealth: 1974.1
   knockbackResistance: 0
   maxStunValue: 1
   stunResistance: 0
@@ -2673,7 +2671,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: 1e2d7cfc172315645bf3769183bc113f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
+  m_Radius: 0.4
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -2687,7 +2685,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 0.75
-  m_Acceleration: 3
+  m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 150
   m_StoppingDistance: 0.69

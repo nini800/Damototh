@@ -20,7 +20,7 @@ public class Thing_Base : MonoBehaviour
         BodyRaycastOrigin = Body.Find("BodyRaycastOrigin");
 
         Visual = transform.Find("Visual");
-        anim = Visual.GetComponent<Animator>();
+        anim = Visual.GetComponentInChildren<Animator>();
         LB = GetComponent<LivingBeing>();
     }
 }

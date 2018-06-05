@@ -96,12 +96,12 @@ public class e_EnemyAI : e_Base
                     if (DistFromTarget > maxTargetDistance)
                     {
                         SetDestination(targetBody.position);
-                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0)), rotationSpeed);
+                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation(Agent.desiredVelocity), rotationSpeed);
                     }
                     else
                     {
                         Agent.SetDestination(Body.position);
-                        print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
+                        //print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
                         Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
                         StartCoroutine("AttackCoroutine");
 
@@ -185,7 +185,7 @@ public class e_EnemyAI : e_Base
         float totalFrequency = 0;
         for (int i = 0; i < attacks.Length; i++)
         {
-            print(Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).normalized.ToXZ()));
+            //print(Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).normalized.ToXZ()));
             if (attacks[i].minHealthPercent <= LB.CurHealth/LB.MaxHealth*100 &&
                 attacks[i].maxHealthPercent >= LB.CurHealth/LB.MaxHealth*100 &&
                 attacks[i].lastAttackTime + attacks[i].attackCooldown < Time.time &&
