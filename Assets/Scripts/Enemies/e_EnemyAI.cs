@@ -101,6 +101,7 @@ public class e_EnemyAI : e_Base
                     else
                     {
                         Agent.SetDestination(Body.position);
+                        print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
                         Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
                         StartCoroutine("AttackCoroutine");
 
@@ -189,7 +190,7 @@ public class e_EnemyAI : e_Base
                 attacks[i].maxHealthPercent >= LB.CurHealth/LB.MaxHealth*100 &&
                 attacks[i].lastAttackTime + attacks[i].attackCooldown < Time.time &&
                 attacks[i].minDistance >= Vector3.Distance(targetBody.position, Body.position) &&
-                attacks[i].minAngle >= Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).normalized.ToXZ()))
+                attacks[i].minAngle >= Vector2.Angle(Body.forward.ToXZ(), (targetBody.position - Body.position).ToXZ().normalized))
             {
                 totalFrequency += attacks[i].frequency;
                 possibleAttacks.Add(attacks[i]);
