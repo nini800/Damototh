@@ -26,7 +26,8 @@ public class p_MovementController : p_Base
 
     [Header("Walk parameters")]
     [SerializeField] float s_Acceleration;
-    [SerializeField] float s_MaxSpeed;
+    [SerializeField] float s_WalkMaxSpeed;
+    [SerializeField] float s_RunMaxSpeed;
     [SerializeField] float s_SideBrake;
     [SerializeField] float s_AutoBrake;
 
@@ -99,7 +100,6 @@ public class p_MovementController : p_Base
     public new bool Grounded { get; private set; }
     public new bool Sprinting { get; private set; }
 
-    public float WalkMaxSpeed { get { return s_MaxSpeed; } }
     public float SprintMaxSpeed { get { return ss_MaxSpeed; } }
 
     public Ladder CurrentLadder { get { return currentLadder; } }
@@ -239,7 +239,7 @@ public class p_MovementController : p_Base
 
         if (Sprinting)
         {
-            if (moveInput.sqrMagnitude > 0.25f)//magnitude < 0.5f
+            if (moveInput.sqrMagnitude > 0.25f)//magnitude > 0.5f
                 moveInput.Normalize();
             else
                 Sprinting = false;
@@ -302,7 +302,7 @@ public class p_MovementController : p_Base
         else if (oldDashing)
         {
             oldDashing = false;
-            R.velocity = MoveDirection * (oldSprinting ? ss_MaxSpeed : s_MaxSpeed);
+            R.velocity = MoveDirection * (oldSprinting ? ss_MaxSpeed : (moveInput.magnitude <= 0.5f ? s_WalkMaxSpeed : s_RunMaxSpeed));
         }
     }
     void MovementHandler()
@@ -336,7 +336,7 @@ public class p_MovementController : p_Base
             R.velocity = sbCalculator.TransformVector(R.velocity);
 
             //Apply it
-            R.velocity = Utilities.AddWithLimit(R.velocity, moveVector, (Sprinting ? ss_MaxSpeed * moveInput.magnitude: s_MaxSpeed * moveInput.magnitude), Utilities.CalculMode.NoYAxis, Utilities.LimitMode.Smooth, (Sprinting ? ss_Acceleration : s_Acceleration) * Utilities.Delta);
+            R.velocity = Utilities.AddWithLimit(R.velocity, moveVector, (Sprinting ? ss_MaxSpeed : moveInput.magnitude <= 0.5f ? s_WalkMaxSpeed : s_RunMaxSpeed), Utilities.CalculMode.NoYAxis, Utilities.LimitMode.Smooth, (Sprinting ? ss_Acceleration : s_Acceleration) * Utilities.Delta);
         }
         else
             R.velocity = Utilities.SubtractMagnitude(R.velocity, s_AutoBrake * Utilities.Delta);

@@ -27,11 +27,36 @@ public class e_EnemyAI : e_Base
         Mobile,
         Immobile
     }
+
+    [System.Serializable]
+    public class RandomFloat
+    {
+        public float min;
+        public float max;
+
+        public float choosenValue { get; private set; }
+
+        public float Value { get { return baked ? choosenValue : Random.Range(min, max); }  }
+        public void Bake()
+        {
+            choosenValue = Value;
+            baked = true;
+        }
+        private bool baked = false;
+    }
+
     [Header("Movements")]
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotationSpeed;
     [SerializeField] protected float autoBrake;
-    [SerializeField] protected float maxTargetDistance;
+    [SerializeField] protected RandomFloat maxTargetDistance;
+    [Space]
+    [SerializeField] protected RandomFloat dodgeWaitTime;
+    [SerializeField] protected float dodgeChances;
+    [SerializeField] protected RandomFloat dodgeDetectRadius;
+    [SerializeField] protected RandomFloat dodgeSpeed;
+    [SerializeField] protected RandomFloat dodgeRandomAngle;
+    [SerializeField] protected RandomFloat dodgeCooldown;
     [Header("Attacks")]
     [SerializeField] protected EnemyAttackStats[] attacks;
     [Header("Others")]
@@ -51,7 +76,7 @@ public class e_EnemyAI : e_Base
     protected Transform targetBody;
     public Transform Target { get { return targetBody; } }
 
-    protected float lastAttackTime;
+    protected float lastAttackTime, lastDodgeTime = -Mathf.Infinity;
 
     protected override void Awake()
     {
@@ -59,6 +84,8 @@ public class e_EnemyAI : e_Base
 
         Agent.speed = moveSpeed;
         Agent.updateRotation = false;
+        maxTargetDistance.Bake();
+        dodgeCooldown.Bake();
     }
 
     protected virtual void Update ()
@@ -82,7 +109,7 @@ public class e_EnemyAI : e_Base
                 if (behaviour != BehaviourType.Immobile)
                 {
                     SetDestination(Body.position);
-                    CheckAround(maxTargetDistance);
+                    CheckAround(maxTargetDistance.Value);
                 }
 
                 return;
@@ -92,38 +119,86 @@ public class e_EnemyAI : e_Base
             switch (curAttackState)
             {
                 case AttackState.Normal:
-                    //Move part
-                    if (DistFromTarget > maxTargetDistance)
-                    {
-                        SetDestination(targetBody.position);
-                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation(Agent.desiredVelocity), rotationSpeed);
-                    }
-                    else
-                    {
-                        Agent.SetDestination(Body.position);
-                        //print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
-                        Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
-                        StartCoroutine("AttackCoroutine");
-
-                        if (currentAttack == null)
-                            SetDestination(targetBody.position);
-                    }
+                    CanAttackHandler();
                     break;
                 case AttackState.Casting:
-                    Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
-                    Agent.SetDestination(Body.position);
+                    CastingAttackHandler();
                     break;
                 case AttackState.Attacking:
-                    Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
-                    Agent.SetDestination(Body.position);
+                    AttackingHandler();
                     break;
             }
+
+            ListenTargetAttacks();
 
             //Update coll
             BodyColl.transform.position = Body.position + Visual.forward * (BodyColl.transform.localPosition.SetY(0).magnitude) + Vector3.up * BodyColl.height * 0.5f;
         }
     }
 
+    public virtual void CanAttackHandler()
+    {
+        if (DistFromTarget > maxTargetDistance.Value)
+        {
+            SetDestination(targetBody.position);
+            Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation(Agent.desiredVelocity), rotationSpeed);
+        }
+        else
+        {
+            Agent.SetDestination(Body.position);
+            //print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
+            Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
+            StartCoroutine("AttackCoroutine");
+
+            if (currentAttack == null)
+                SetDestination(targetBody.position);
+        }
+    }
+
+    AttackState e_oldAttackState = AttackState.Normal;
+    p_AttackController.e_AttackState p_oldAttackState = p_AttackController.e_AttackState.None;
+    public virtual void ListenTargetAttacks()
+    {
+        e_EnemyAI enemy;
+        p_Base player;
+        if (enemy = targetBody.GetComponentInParent<e_EnemyAI>())
+        {
+            if ((e_oldAttackState != AttackState.Casting) && enemy.CurAttackState == AttackState.Casting)
+            {
+                SendMessage("OnTargetBeginCastingAttack", enemy.currentAttack);
+            }
+            else if (e_oldAttackState == AttackState.Casting && enemy.CurAttackState == AttackState.Attacking)
+            {
+                SendMessage("OnTargetBeginAttacking", enemy.currentAttack);
+            }
+
+            e_oldAttackState = enemy.CurAttackState;
+        }
+        else if (player = targetBody.GetComponentInParent<p_Base>())
+        {
+            if (p_oldAttackState != p_AttackController.e_AttackState.Casting && player.AttackState == p_AttackController.e_AttackState.Casting)
+            {
+                SendMessage("OnTargetBeginCastingAttack", player.AC.CurrentAttack);
+            }
+            else if (p_oldAttackState == p_AttackController.e_AttackState.Casting && player.AttackState == p_AttackController.e_AttackState.Attacking)
+            {
+                SendMessage("OnTargetBeginAttacking", player.AC.CurrentAttack);
+            }
+
+            p_oldAttackState = player.AttackState;
+        }
+    }
+
+    public virtual void CastingAttackHandler()
+    {
+        Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
+        Agent.SetDestination(Body.position);
+    }
+    public virtual void AttackingHandler()
+    {
+        Agent.velocity = Utilities.SubtractMagnitude(Agent.velocity, autoBrake * Utilities.Delta);
+        Agent.SetDestination(Body.position);
+    }
     public virtual void InterruptAttack()
     {
         StopCoroutine("AttackCoroutine");
@@ -240,6 +315,45 @@ public class e_EnemyAI : e_Base
     {
         if (pos != Agent.destination)
             Agent.SetDestination(pos);
+    }
+
+
+    void OnTargetBeginCastingAttack(AttackStats attack)
+    {
+        Debug.Log((Time.time > (lastDodgeTime + dodgeCooldown.Value)) + " / " + (DistFromTarget <= dodgeDetectRadius.Value) + " / " + (Random.Range(0, 100f) > dodgeChances));
+        if (Time.time > lastDodgeTime + dodgeCooldown.Value && DistFromTarget <= dodgeDetectRadius.Value && Random.Range(0, 100f) > dodgeChances)
+            Invoke("Dodge", dodgeWaitTime.Value);
+    }
+    void OnTargetBeginAttacking(AttackStats attack)
+    {
+    }
+    void Dodge()
+    {
+        if (EB.CurLivingState != LivingBeing.LivingState.Normal)
+            return;
+
+        lastDodgeTime = Time.time;
+
+        Vector3 dir = (Body.position - targetBody.position).SetY(0).normalized;
+        //Debug.DrawRay(Body.position, dir, Color.red, 100f);
+        Transform temp = new GameObject().transform;
+        temp.LookAt(dir);
+        dir = temp.InverseTransformDirection(dir);
+        dir.x += dodgeRandomAngle.Value;
+        dir = temp.TransformDirection(dir);
+        dir.Normalize();
+        //Debug.DrawRay(Body.position, dir, Color.yellow, 100f);
+
+        dodgeCooldown.Bake();
+        Agent.velocity += dir * dodgeSpeed.Value;
+    }
+
+    private void OnValidate()
+    {
+        if (dodgeChances < 0)
+            dodgeChances = 0;
+        else if (dodgeChances > 100)
+            dodgeChances = 100;
     }
 
 }

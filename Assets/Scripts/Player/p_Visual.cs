@@ -71,14 +71,9 @@ public class p_Visual : p_Base
     }
     protected void AnimationHandler()
     {
-        PlayAnimation("Idle", 0.4f);
-        return;
-
         if (MovementState != p_MovementController.e_MovementState.Climbing)
         {
             float curSpeed = MC.MoveInput.magnitude;
-
-            anim.SetFloat("AnimSpeed", curSpeed + 1);
 
             if (PB.CurLivingState == LivingBeing.LivingState.Stunned)
                 PlayAnimation("Idle", 0.4f);
@@ -104,10 +99,12 @@ public class p_Visual : p_Base
             {
                 if (curSpeed <= 0)
                     PlayAnimation("Idle", 0.4f);
-                else if (!Sprinting)
-                    PlayAnimation("Trotinne", 0.4f);
+                else if (curSpeed <= 0.5f && !Sprinting)
+                    PlayAnimation("Walk", 0.4f);
+                else if (curSpeed > 0.5f && !Sprinting)
+                    PlayAnimation("Run", 0.4f);
                 else
-                    PlayAnimation("Sprint", 0.4f);
+                    PlayAnimation("Run", 0.4f);
             }
         }
         else

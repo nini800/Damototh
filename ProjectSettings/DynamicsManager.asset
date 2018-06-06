@@ -14,7 +14,7 @@ PhysicsManager:
   m_QueriesHitBackfaces: 0
   m_QueriesHitTriggers: 1
   m_EnableAdaptiveForce: 0
-  m_ClothInterCollisionDistance: 0.1
+  m_ClothInterCollisionDistance: 0.02
   m_ClothInterCollisionStiffness: 1
   m_ContactsGeneration: 1
   m_LayerCollisionMatrix: c925ffffc800fcffc800fcffffffffffc800fcffc800fcffffffffffffffffffc9ccffffc80cfdffc907ffffc803fcffc800fcffc960feffc821fcffc801fcffc907feffc925ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
