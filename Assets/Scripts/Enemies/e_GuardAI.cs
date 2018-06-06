@@ -17,7 +17,7 @@ public class e_GuardAI : e_EnemyAI
             if (Vector3.Distance(Body.position, path.GetNodePosition(currentPathNode)) <= Agent.stoppingDistance)
                 currentPathNode++;
 
-            CheckAround(maxTargetDistance);
+            CheckAround(maxTargetDistance.Value);
         }
         else
         {
