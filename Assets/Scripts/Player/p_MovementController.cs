@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class p_MovementController : p_Base
 {
-    public new enum e_MovementState
+    public enum e_MovementState
     {
         Standing = 1,
         WalkLeft = 2,
@@ -15,10 +15,16 @@ public class p_MovementController : p_Base
         RunRight = 64,
         RunForward = 128,
         RunBackward = 256,
-        Sprinting = 512,
-        Dashing = 1024,
-        InAir = 2048,
-        Climbing = 4096
+        SprintingLeft = 512,
+        SprintingRight = 1024,
+        SprintingForward = 2048,
+        SprintingBackward = 4096,
+        DashingLeft = 8192,
+        DashingRight = 16384,
+        DashingForward = 32768,
+        DashingBackward = 65536,
+        InAir = 131072,
+        Climbing = 262144
     }
 
     //Standing Parameters
@@ -94,7 +100,7 @@ public class p_MovementController : p_Base
 
     //Members
     //Public
-    public e_MovementState MovementState { get { return movementState; } }
+    new public e_MovementState MovementState { get { return movementState; } }
     public Vector3 MoveDirection { get; protected set; }
     public Vector3 MoveInput { get; protected set; }
     public new bool Grounded { get; private set; }
@@ -233,7 +239,17 @@ public class p_MovementController : p_Base
         moveInput = C.MoveInput;
 
         if (Grounded && AttackState == p_AttackController.e_AttackState.None && movementState != e_MovementState.Climbing)
-            Sprinting = C.Sprint || Sprinting;
+        {
+            if (EnemyLocked)
+            {
+                if ((movementState & (e_MovementState.WalkForward | e_MovementState.SprintingForward | e_MovementState.RunForward)) != 0 && (C.Sprint || Sprinting))
+                    Sprinting = true;
+                else
+                    Sprinting = false;
+            }
+            else
+                Sprinting = C.Sprint || Sprinting;
+        }
         else
             Sprinting = false;
 
@@ -245,6 +261,9 @@ public class p_MovementController : p_Base
                 Sprinting = false;
         }
 
+        if (Dashing)
+            return;
+
         if (moveInput.sqrMagnitude != 0)
         {
             if (moveInput.sqrMagnitude < 0.25f)
@@ -254,8 +273,7 @@ public class p_MovementController : p_Base
 
             moveVector = CamPivot.TransformVector(moveInput.ToXZ());
 
-            if (!Dashing)
-                MoveDirection = moveVector.normalized;
+            MoveDirection = moveVector.normalized;
         }
         else
             MoveDirection = Visual.forward;
@@ -266,22 +284,31 @@ public class p_MovementController : p_Base
 
     void ActualizeState()
     {
-        if (Dashing)
-            movementState = e_MovementState.Dashing;
+        if (Dashing && (movementState & (e_MovementState.DashingBackward | e_MovementState.DashingForward | e_MovementState.DashingRight | e_MovementState.DashingLeft)) == 0)
+        {
+            Vector3 vector = CamPivot.InverseTransformDirection(MoveDirection);
+
+            if (vector.z >= Mathf.Abs(vector.x))
+                movementState = e_MovementState.DashingForward;
+            else if (vector.z <= -Mathf.Abs(vector.x))
+                movementState = e_MovementState.DashingBackward;
+            else if (vector.x > Mathf.Abs(vector.z))
+                movementState = e_MovementState.DashingRight;
+            else
+                movementState = e_MovementState.DashingLeft;
+        }
         else if (Grounded)
         {
             if (moveVector.sqrMagnitude == 0)
                 movementState = e_MovementState.Standing;
-            else if (Sprinting)
-                movementState = e_MovementState.Sprinting;
-            else if (moveInput.y > Mathf.Abs(moveInput.x))
-                movementState = moveInput.sqrMagnitude < 1f ? e_MovementState.WalkForward : e_MovementState.RunForward;
-            else if (moveInput.y < -Mathf.Abs(moveInput.x))
-                movementState = moveInput.sqrMagnitude < 1f ? e_MovementState.WalkBackward : e_MovementState.RunBackward;
+            else if (moveInput.y >= Mathf.Abs(moveInput.x))
+                movementState = Sprinting ? e_MovementState.SprintingForward : moveInput.sqrMagnitude < 1f ? e_MovementState.WalkForward : e_MovementState.RunForward;
+            else if (moveInput.y <= -Mathf.Abs(moveInput.x))
+                movementState = Sprinting ? e_MovementState.SprintingBackward : moveInput.sqrMagnitude < 1f ? e_MovementState.WalkBackward : e_MovementState.RunBackward;
             else if (moveInput.x > Mathf.Abs(moveInput.y))
-                movementState = moveInput.sqrMagnitude < 1f ? e_MovementState.WalkRight : e_MovementState.RunRight;
+                movementState = Sprinting ? e_MovementState.SprintingRight : moveInput.sqrMagnitude < 1f ? e_MovementState.WalkRight : e_MovementState.RunRight;
             else
-                movementState = moveInput.sqrMagnitude < 1f ? e_MovementState.WalkLeft : e_MovementState.RunLeft;
+                movementState = Sprinting ? e_MovementState.SprintingLeft : moveInput.sqrMagnitude < 1f ? e_MovementState.WalkLeft : e_MovementState.RunLeft;
         }
         else
             movementState = e_MovementState.InAir;

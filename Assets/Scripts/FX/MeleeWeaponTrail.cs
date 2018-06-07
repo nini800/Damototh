@@ -354,4 +354,14 @@ public class MeleeWeaponTrail : MonoBehaviour
 
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (_base == null || _tip == null)
+            return;
+
+        Gizmos.DrawSphere(_base.position, 0.01f);
+        Gizmos.DrawSphere(_tip.position, 0.01f);
+        Gizmos.DrawLine(_base.position, _tip.position);
+    }
 }

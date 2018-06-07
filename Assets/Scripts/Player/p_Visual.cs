@@ -41,7 +41,7 @@ public class p_Visual : p_Base
             {
                 if (MC.Dashing)
                 {
-                    Visual.LookAt(Visual.position + R.velocity.SetY(0));
+                    //Visual.LookAt(Visual.position + R.velocity.SetY(0));
                 }
                 else
                 {
@@ -56,8 +56,11 @@ public class p_Visual : p_Base
                     }
                     else
                     {
-                        Visual.localRotation = Quaternion.RotateTowards(Visual.localRotation, Quaternion.LookRotation(EnemyLocked.Body.position.SetY(Visual.position.y) - Visual.position), rotSpeed * Utilities.Delta);
-                        curAngle = Visual.localEulerAngles.y;
+                        if (AttackState == p_AttackController.e_AttackState.None || AttackState == p_AttackController.e_AttackState.Recovering)
+                        {
+                            Visual.localRotation = Quaternion.RotateTowards(Visual.localRotation, Quaternion.LookRotation(EnemyLocked.Body.position.SetY(Visual.position.y) - Visual.position), rotSpeed * Utilities.Delta);
+                            curAngle = Visual.localEulerAngles.y;
+                        }
                     }
                 }
             }
@@ -82,13 +85,13 @@ public class p_Visual : p_Base
                 switch (AC.CurrentAttack.Name)
                 {
                     case "Light_1":
-                        PlayAnimation("Attaque1", 0.1f);
+                        PlayAnimation("lightattack_simple_A", 0.1f);
                         break;
                     case "Light_1_1":
-                        PlayAnimation("Attaque2", 0.1f);
+                        PlayAnimation("lightattack_simple_B", 0.1f);
                         break;
                     case "Light_1_1_1":
-                        PlayAnimation("Attaque3", 0.1f);
+                        PlayAnimation("lightattack_simple_A", 0.1f);
                         break;
                     case "Sprinting_Heavy_1":
                         PlayAnimation("Attaque3", 0.3f);
@@ -97,22 +100,85 @@ public class p_Visual : p_Base
             }
             else if (!Dashing && Grounded)
             {
-                if (curSpeed <= 0)
-                    PlayAnimation("Idle", 0.4f);
-                else if (curSpeed <= 0.5f && !Sprinting)
-                    PlayAnimation("Walk", 0.4f);
-                else if (curSpeed > 0.5f && !Sprinting)
-                    PlayAnimation("Run", 0.4f);
+                if (!EnemyLocked)
+                {
+                    if (curSpeed <= 0)
+                        PlayAnimation("Idle", 0.4f);
+                    else if (curSpeed <= 0.5f && !Sprinting)
+                        PlayAnimation("Walk", 0.4f);
+                    else if (curSpeed > 0.5f && !Sprinting)
+                        PlayAnimation("Run", 0.4f);
+                    else
+                        PlayAnimation("Sprint", 0.4f);
+                }
                 else
-                    PlayAnimation("Run", 0.4f);
+                {
+                    switch (MC.MovementState)
+                    {
+                        case p_MovementController.e_MovementState.Standing:
+                            PlayAnimation("Idle_Fight", 0.2f);
+                            break;
+                        case p_MovementController.e_MovementState.WalkLeft:
+                            PlayAnimation("Run_Fight_Left", 0.4f);
+                            break;
+                        case p_MovementController.e_MovementState.WalkRight:
+                            PlayAnimation("Run_Fight_Right", 0.4f);
+                            break;
+                        case p_MovementController.e_MovementState.WalkForward:
+                            PlayAnimation("Run_Fight_Forward", 0.4f);
+                            break;
+                        case p_MovementController.e_MovementState.WalkBackward:
+                            PlayAnimation("Run_Fight_Backward", 0.4f);
+                            break;
+                        case p_MovementController.e_MovementState.RunLeft:
+                            PlayAnimation("Run_Fight_Left", 0.2f);
+                            break;
+                        case p_MovementController.e_MovementState.RunRight:
+                            PlayAnimation("Run_Fight_Right", 0.2f);
+                            break;
+                        case p_MovementController.e_MovementState.RunForward:
+                            PlayAnimation("Run_Fight_Forward", 0.2f);
+                            break;
+                        case p_MovementController.e_MovementState.RunBackward:
+                            PlayAnimation("Run_Fight_Backward", 0.2f);
+                            break;
+                        case p_MovementController.e_MovementState.SprintingBackward:
+                        case p_MovementController.e_MovementState.SprintingForward:
+                        case p_MovementController.e_MovementState.SprintingLeft:
+                        case p_MovementController.e_MovementState.SprintingRight:
+                            PlayAnimation("Sprint", 0.4f);
+                            break;
+                        case p_MovementController.e_MovementState.InAir:
+                            break;
+                        case p_MovementController.e_MovementState.Climbing:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else if (Dashing)
+            {
+                switch (MovementState)
+                {
+                    case p_MovementController.e_MovementState.DashingLeft:
+                        PlayAnimation("Dash_Left", 0.15f);
+                        break;
+                    case p_MovementController.e_MovementState.DashingRight:
+                        PlayAnimation("Dash_Right", 0.15f);
+                        break;
+                    case p_MovementController.e_MovementState.DashingForward:
+                        PlayAnimation("Dash_Left", 0.15f);
+                        break;
+                    case p_MovementController.e_MovementState.DashingBackward:
+                        PlayAnimation("Dash_Back", 0.15f);
+                        break;
+                }
             }
         }
         else
         {
-            if (PB.CurLivingState == LivingBeing.LivingState.Normal)
-                PlayAnimation("Idle", 0.4f);
-            else
-                PlayAnimation("Trotinne", 0.4f);
+            PlayAnimation("Idle", 0.4f);
         }
 
     }

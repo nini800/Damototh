@@ -49,6 +49,7 @@ public class e_EnemyAI : e_Base
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotationSpeed;
     [SerializeField] protected float autoBrake;
+    [SerializeField] protected float targetDetectDistance = 5;
     [SerializeField] protected RandomFloat maxTargetDistance;
     [Space]
     [SerializeField] protected RandomFloat dodgeWaitTime;
@@ -109,7 +110,7 @@ public class e_EnemyAI : e_Base
                 if (behaviour != BehaviourType.Immobile)
                 {
                     SetDestination(Body.position);
-                    CheckAround(maxTargetDistance.Value);
+                    CheckAround(targetDetectDistance);
                 }
 
                 return;
@@ -141,7 +142,8 @@ public class e_EnemyAI : e_Base
         if (DistFromTarget > maxTargetDistance.Value)
         {
             SetDestination(targetBody.position);
-            Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation(Agent.desiredVelocity), rotationSpeed);
+            if (Agent.desiredVelocity.sqrMagnitude != 0)
+                Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation(Agent.desiredVelocity), rotationSpeed);
         }
         else
         {
@@ -149,9 +151,6 @@ public class e_EnemyAI : e_Base
             //print("A: " + ((targetBody.position - Body.position).SetY(0).normalized) + " / "  + targetBody.position + " / " + Body.position);
             Body.rotation = Quaternion.RotateTowards(Body.rotation, Quaternion.LookRotation((targetBody.position - Body.position).SetY(0).normalized), rotationSpeed);
             StartCoroutine("AttackCoroutine");
-
-            if (currentAttack == null)
-                SetDestination(targetBody.position);
         }
     }
 
@@ -211,6 +210,7 @@ public class e_EnemyAI : e_Base
         currentAttack = GetRandomAttack();
         if (currentAttack != null)
         {
+            SendMessage("OnAttackStart", currentAttack);
             StartCoroutine("ImpulsesCoroutine", currentAttack.impulses);
 
             curAttackState = AttackState.Casting;
@@ -232,6 +232,7 @@ public class e_EnemyAI : e_Base
             curAttackState = AttackState.Recover;
             yield return new WaitForSeconds(currentAttack.recoverTime);
 
+            SendMessage("OnAttackStop", currentAttack);
             currentAttack = null;
             curAttackState = AttackState.Normal;
         }
@@ -320,7 +321,6 @@ public class e_EnemyAI : e_Base
 
     void OnTargetBeginCastingAttack(AttackStats attack)
     {
-        Debug.Log((Time.time > (lastDodgeTime + dodgeCooldown.Value)) + " / " + (DistFromTarget <= dodgeDetectRadius.Value) + " / " + (Random.Range(0, 100f) > dodgeChances));
         if (Time.time > lastDodgeTime + dodgeCooldown.Value && DistFromTarget <= dodgeDetectRadius.Value && Random.Range(0, 100f) > dodgeChances)
             Invoke("Dodge", dodgeWaitTime.Value);
     }

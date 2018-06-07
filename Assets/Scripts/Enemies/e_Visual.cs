@@ -5,11 +5,32 @@ using UnityEngine;
 public class e_Visual : e_Base 
 {
     [SerializeField] protected float rotSpeed = 1f;
+    MeleeWeaponTrail attackTrail;
 
-	protected virtual void Update ()
+    protected override void Awake()
+    {
+        base.Awake();
+        attackTrail = Visual.GetComponentInChildren<MeleeWeaponTrail>();
+    }
+
+    protected virtual void Update ()
     {
         Visual.position = Body.position;
         Visual.rotation = Body.rotation;
+
+        AnimationHandler();
+    }
+
+    protected virtual void AnimationHandler()
+    {
+        if (Agent.desiredVelocity.magnitude > 0.1f)
+        {
+            PlayAnimation("Run");
+        }
+        else
+        {
+            PlayAnimation("Idle");
+        }
     }
 
     protected virtual void OnTakeHit()
@@ -32,5 +53,27 @@ public class e_Visual : e_Base
         }
         mat.color = oColor;
     }
-	
+
+    protected void PlayAnimation(string stateName, float crossFade = 0.2f, bool fromStart = false)
+    {
+        if ((anim.GetNextAnimatorStateInfo(0).IsName(stateName) || anim.GetCurrentAnimatorStateInfo(0).IsName(stateName)) && !fromStart)
+            return;
+
+        if (!fromStart)
+            anim.CrossFadeInFixedTime(stateName, crossFade, 0);
+        else
+            anim.CrossFadeInFixedTime(stateName, crossFade, 0, 0, 0);
+    }
+
+
+
+    protected void OnAttackStart(EnemyAttackStats attack)
+    {
+        attackTrail.Emit = true;
+    }
+
+    protected void OnAttackStop(EnemyAttackStats attack)
+    {
+        attackTrail.Emit = false;
+    }
 }

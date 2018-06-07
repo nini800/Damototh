@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class e_GuardVisual : e_Visual
 {
-    protected override void Update()
+    protected override void AnimationHandler()
     {
-        base.Update();
-
-        if (IA.CurAttackState == e_EnemyAI.AttackState.Casting)
+        if (IA.CurAttackState != e_EnemyAI.AttackState.Normal)
         {
-            GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+            PlayAnimation("guardattack_combo", 0.2f);
         }
-        else if (IA.CurAttackState == e_EnemyAI.AttackState.Attacking)
+        else if (Agent.desiredVelocity.magnitude > 0.1f)
         {
-            GetComponentInChildren<MeshRenderer>().material.color = Color.red;
-        }
-        else if (IA.CurAttackState == e_EnemyAI.AttackState.Recover)
-        {
-            GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+            PlayAnimation("Run");
         }
         else
         {
-            GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+            PlayAnimation("Idle");
         }
     }
 }

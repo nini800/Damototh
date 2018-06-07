@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: 3cf85751abfb3da498f29e78b6c832d8
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: be_head01
+    100004: be_l_fooEnd01
+    100006: be_l_index_d01
+    100008: be_l_mid_d01
+    100010: be_l_pinky_d01
+    100012: be_l_ring_d01
+    100014: be_l_thumb_d01
+    100016: be_l_wristEnd01
+    100018: be_r_fooEnd01
+    100020: be_r_index_d01
+    100022: be_r_mid_d01
+    100024: be_r_pinky_d01
+    100026: be_r_ring_d01
+    100028: be_r_thumb_d01
+    100030: be_r_wristEnd01
+    100032: be_spineE_end01
+    100034: bn_head01
+    100036: bn_l_ankle01
+    100038: bn_l_elb01
+    100040: bn_l_foot01
+    100042: bn_l_index_a01
+    100044: bn_l_index_b01
+    100046: bn_l_index_c01
+    100048: bn_l_knee01
+    100050: bn_l_mid_a01
+    100052: bn_l_mid_b01
+    100054: bn_l_mid_c01
+    100056: bn_l_palmBend01
+    100058: bn_l_pinky_a01
+    100060: bn_l_pinky_b01
+    100062: bn_l_pinky_c01
+    100064: bn_l_ring_a01
+    100066: bn_l_ring_b01
+    100068: bn_l_ring_c01
+    100070: Bn_l_shld01
+    100072: bn_l_thigh01
+    100074: bn_l_thumb_a01
+    100076: bn_l_thumb_b01
+    100078: bn_l_thumb_c01
+    100080: bn_r_ankle01
+    100082: bn_r_elb01
+    100084: bn_r_foot01
+    100086: bn_r_index_a01
+    100088: bn_r_index_b01
+    100090: bn_r_index_c01
+    100092: bn_r_knee01
+    100094: bn_r_mid_a01
+    100096: bn_r_mid_b01
+    100098: bn_r_mid_c01
+    100100: bn_r_palmBend01
+    100102: bn_r_pinky_a01
+    100104: bn_r_pinky_b01
+    100106: bn_r_pinky_c01
+    100108: bn_r_ring_a01
+    100110: bn_r_ring_b01
+    100112: bn_r_ring_c01
+    100114: Bn_r_shld01
+    100116: bn_r_thigh01
+    100118: bn_r_thumb_a01
+    100120: bn_r_thumb_b01
+    100122: bn_r_thumb_c01
+    100124: bn_root01
+    100126: bn_spineA01
+    100128: bn_spineB01
+    100130: bn_spineC01
+    100132: bn_spineD01
+    100134: bn_spineE01
+    100136: jDrv_l_clav01
+    100138: jDrv_r_clav01
+    100140: localign_main_sword_offset
+    100142: sword_grp
+    100144: sword_joint1
+    100146: sword_joint2
+    400000: //RootNode
+    400002: be_head01
+    400004: be_l_fooEnd01
+    400006: be_l_index_d01
+    400008: be_l_mid_d01
+    400010: be_l_pinky_d01
+    400012: be_l_ring_d01
+    400014: be_l_thumb_d01
+    400016: be_l_wristEnd01
+    400018: be_r_fooEnd01
+    400020: be_r_index_d01
+    400022: be_r_mid_d01
+    400024: be_r_pinky_d01
+    400026: be_r_ring_d01
+    400028: be_r_thumb_d01
+    400030: be_r_wristEnd01
+    400032: be_spineE_end01
+    400034: bn_head01
+    400036: bn_l_ankle01
+    400038: bn_l_elb01
+    400040: bn_l_foot01
+    400042: bn_l_index_a01
+    400044: bn_l_index_b01
+    400046: bn_l_index_c01
+    400048: bn_l_knee01
+    400050: bn_l_mid_a01
+    400052: bn_l_mid_b01
+    400054: bn_l_mid_c01
+    400056: bn_l_palmBend01
+    400058: bn_l_pinky_a01
+    400060: bn_l_pinky_b01
+    400062: bn_l_pinky_c01
+    400064: bn_l_ring_a01
+    400066: bn_l_ring_b01
+    400068: bn_l_ring_c01
+    400070: Bn_l_shld01
+    400072: bn_l_thigh01
+    400074: bn_l_thumb_a01
+    400076: bn_l_thumb_b01
+    400078: bn_l_thumb_c01
+    400080: bn_r_ankle01
+    400082: bn_r_elb01
+    400084: bn_r_foot01
+    400086: bn_r_index_a01
+    400088: bn_r_index_b01
+    400090: bn_r_index_c01
+    400092: bn_r_knee01
+    400094: bn_r_mid_a01
+    400096: bn_r_mid_b01
+    400098: bn_r_mid_c01
+    400100: bn_r_palmBend01
+    400102: bn_r_pinky_a01
+    400104: bn_r_pinky_b01
+    400106: bn_r_pinky_c01
+    400108: bn_r_ring_a01
+    400110: bn_r_ring_b01
+    400112: bn_r_ring_c01
+    400114: Bn_r_shld01
+    400116: bn_r_thigh01
+    400118: bn_r_thumb_a01
+    400120: bn_r_thumb_b01
+    400122: bn_r_thumb_c01
+    400124: bn_root01
+    400126: bn_spineA01
+    400128: bn_spineB01
+    400130: bn_spineC01
+    400132: bn_spineD01
+    400134: bn_spineE01
+    400136: jDrv_l_clav01
+    400138: jDrv_r_clav01
+    400140: localign_main_sword_offset
+    400142: sword_grp
+    400144: sword_joint1
+    400146: sword_joint2
+    7400000: Idle_Fight
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle_Fight
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
