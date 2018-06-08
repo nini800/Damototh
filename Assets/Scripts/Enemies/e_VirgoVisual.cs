@@ -45,5 +45,13 @@ public class e_VirgoVisual : e_Visual
 
         lastFrameAttacking = thisFrameAttacking;
     }
-	
+
+
+    protected override void OnTakeHit()
+    {
+        base.OnTakeHit();
+        anim.Play("Switch", 0, 0.75f);
+
+    }
+
 }

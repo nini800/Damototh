@@ -74,7 +74,7 @@ public class AttackObject : MonoBehaviour
 
             hitInfos = new HitInfos(hitInfos, thingHit);
 
-            AttackOwner.SendMessage("OnAttackHit", new HitInfos(hitInfos, thingHit));
+            AttackOwner.SendMessage("OnAttackHit", new HitInfos(hitInfos, thingHit), SendMessageOptions.DontRequireReceiver);
             maxHitTimes--;
 
             if (maxHitTimes <= 0)

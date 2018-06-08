@@ -16,7 +16,7 @@ public class p_Visual : p_Base
         base.Awake();
 
         attackTrail = Visual.GetComponentInChildren<MeleeWeaponTrail>();
-        attackTrail.Emit = false;
+        //attackTrail.Emit = false;
     }
 
     protected void FixedUpdate()
@@ -75,42 +75,42 @@ public class p_Visual : p_Base
         {
             float curSpeed = MC.MoveInput.magnitude;
 
-            anim.SetFloat("AnimSpeed", curSpeed + 1);
-
             if (PB.CurLivingState == LivingBeing.LivingState.Stunned)
-                PlayAnimation("Stand", 0.4f);
+                PlayAnimation("Idle", 0.4f);
             else if (AC.CurrentAttack != null && (AttackState != p_AttackController.e_AttackState.Recovering))
             {
                 switch (AC.CurrentAttack.Name)
                 {
                     case "Light_1":
-                        PlayAnimation("Attaque1", 0.1f, true);
+                        PlayAnimation("Attaque1", 0.1f);
                         break;
                     case "Light_1_1":
-                        PlayAnimation("Attaque2", 0.1f, true);
+                        PlayAnimation("Attaque2", 0.1f);
                         break;
                     case "Light_1_1_1":
-                        PlayAnimation("Attaque3", 0.1f, true);
+                        PlayAnimation("Attaque3", 0.1f);
                         break;
                     case "Sprinting_Heavy_1":
-                        PlayAnimation("Attaque3", 0.3f, true);
+                        PlayAnimation("Attaque3", 0.3f);
                         break;
                 }
             }
             else if (!Dashing && Grounded)
             {
                 if (curSpeed <= 0)
-                    PlayAnimation("Stand", 0.4f);
-                else if (!Sprinting)
-                    PlayAnimation("Trotinne", 0.4f);
+                    PlayAnimation("Idle", 0.4f);
+                else if (curSpeed <= 0.5f && !Sprinting)
+                    PlayAnimation("Walk", 0.4f);
+                else if (curSpeed > 0.5f && !Sprinting)
+                    PlayAnimation("Run", 0.4f);
                 else
-                    PlayAnimation("Sprint", 0.4f);
+                    PlayAnimation("Run", 0.4f);
             }
         }
         else
         {
             if (PB.CurLivingState == LivingBeing.LivingState.Normal)
-                PlayAnimation("Stand", 0.4f);
+                PlayAnimation("Idle", 0.4f);
             else
                 PlayAnimation("Trotinne", 0.4f);
         }
