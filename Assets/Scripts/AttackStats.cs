@@ -11,8 +11,10 @@ public class AttackStats
         Light = 2,
         Medium = 4,
         Heavy = 8,
-        Unstoppable = 16
+        Unstoppable = 16,
+        SameAsStats = 32
     }
+
     [Header("Stats")]
     public string attackName;
     public string Name { get { return attackName; } set { attackName = value; } }

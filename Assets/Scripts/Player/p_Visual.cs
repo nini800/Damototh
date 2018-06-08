@@ -87,17 +87,22 @@ public class p_Visual : p_Base
                     case "Light_1":
                         PlayAnimation("lightattack_simple_A", 0.1f);
                         break;
-                    case "Light_1_1":
+                    case "Light_2":
                         PlayAnimation("lightattack_simple_B", 0.1f);
                         break;
-                    case "Light_1_1_1":
-                        PlayAnimation("lightattack_simple_A", 0.1f);
+                    case "Heavy_1":
+                        PlayAnimation("Combo_Loud1", 0.1f);
+                        break;
+                    case "Heavy_2":
+                        PlayAnimation("Combo_Loud2", 0.1f);
                         break;
                     case "Sprinting_Heavy_1":
                         PlayAnimation("Attaque3", 0.3f);
                         break;
                 }
             }
+            else if (AttackState == p_AttackController.e_AttackState.Mutilating || AttackState == p_AttackController.e_AttackState.MutilateRecover)
+                PlayAnimation("Mutilation", 0.3f);
             else if (!Dashing && Grounded)
             {
                 if (!EnemyLocked)
@@ -181,6 +186,10 @@ public class p_Visual : p_Base
             PlayAnimation("Idle", 0.4f);
         }
 
+
+        anim.SetIKHintPositionWeight(AvatarIKHint.RightElbow, 0.5f);
+        anim.SetIKHintPosition(AvatarIKHint.RightElbow, Vector3.zero);
+
     }
     protected void ToMoveSomewhereElse()
     {
@@ -198,7 +207,8 @@ public class p_Visual : p_Base
 
     void OnCastAttack(PlayerAttackStats attack)
     {
-        ForceRotation();
+        if (!EnemyLocked)
+            ForceRotation();
     }
     public void ForceRotation()
     {
@@ -228,12 +238,8 @@ public class p_Visual : p_Base
 
     void OnJump()
     {
-        PlayAnimation("Esquive", 0.1f, true);
-    }
-
-    void OnDash()
-    {
-        PlayAnimation("Esquive", 0.1f, true);
+        PlayAnimation("Jump", 0.1f, true);
+        ForceRotation();
     }
 
     void OnAttackStart(PlayerAttackStats attack)

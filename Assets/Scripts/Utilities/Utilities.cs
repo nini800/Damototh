@@ -552,6 +552,10 @@ public class Utilities : MonoBehaviour
                     Cursor.visible = !Cursor.visible;
                     Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
                     break;
+                case HideCursorType.Show:
+                    Cursor.visible = !Cursor.visible;
+                    Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
+                    break;
                 default:
                     break;
             }

@@ -12,10 +12,17 @@ public class AttackObject : MonoBehaviour
 
     protected List<LivingBeing> alreadyHit = new List<LivingBeing>();
 
+    public AttackStats.AttackWeightType Weight { get; protected set; }
+
     int maxHitTimes = 0;
 
-    public void Initialize(HitInfos hitInfos)
+    public void Initialize(HitInfos hitInfos, AttackStats.AttackWeightType weight = AttackStats.AttackWeightType.SameAsStats)
     {
+        if (weight != AttackStats.AttackWeightType.SameAsStats)
+            Weight = weight;
+        else
+            Weight = hitInfos.AttackStats.weight;
+
         this.hitInfos = new HitInfos(hitInfos, this);
         maxHitTimes = hitInfos.AttackStats.maxHitTimes;
     }

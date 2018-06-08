@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class p_AttackController : p_Base 
 {
-    public new enum e_AttackState
+    public enum e_AttackState
     {
         None = 1,
         Casting = 2,
         Attacking = 4,
-        Recovering = 8
+        Recovering = 8,
+        Mutilating = 16,
+        MutilateRecover = 32
     }
 
     //Getters
@@ -17,7 +20,7 @@ public class p_AttackController : p_Base
 
     //Members
     //Public
-    public e_AttackState AttackState { get { return attackState; } }
+    public new e_AttackState AttackState { get { return attackState; } }
     public PlayerAttackStats CurrentAttack { get { return currentAttack; } }
 
     public e_AttackState attackState;
@@ -37,9 +40,13 @@ public class p_AttackController : p_Base
     float? mutilateStartTime = null;
 
     public float mutilateCastTime = 1f;
+    public float mutilateRecoverTime = 1f;
     public float mutilateHealthCost = 25f;
+    public float mutilateMinBloodGain = 5f;
     public float mutilateBloodGain = 10f;
     public float mutilateMadnessGain = 55f;
+
+    public float strongBloodThreshold = 50;
 
     protected void Update ()
     {
@@ -96,7 +103,7 @@ public class p_AttackController : p_Base
         {
             GameObject o = Instantiate(attack.attackModel, Body.position, Visual.rotation, transform);
             AttackObject ao = o.GetComponent<AttackObject>();
-            ao.Initialize(new HitInfos(PB, attack));
+            ao.Initialize(new HitInfos(PB, attack), GetWeightByThreshold(attack.weight));
         }
         catch { Debug.LogError("No Prefab Found !"); }
 
@@ -128,6 +135,26 @@ public class p_AttackController : p_Base
         }
     }
 
+    AttackStats.AttackWeightType GetWeightByThreshold(AttackStats.AttackWeightType inWeight)
+    {
+        if (PB.CurBlood < strongBloodThreshold)
+        {
+            return inWeight;
+        }
+        else
+        {
+            switch (inWeight)
+            {
+                case AttackStats.AttackWeightType.Cheap:
+                    return AttackStats.AttackWeightType.Light;
+                case AttackStats.AttackWeightType.Light:
+                    return AttackStats.AttackWeightType.Medium;
+                default:
+                    return AttackStats.AttackWeightType.Heavy;
+            }
+        }
+    }
+
     public void InterruptAttack()
     {
         StopCoroutine("AttackCoroutine");
@@ -146,34 +173,58 @@ public class p_AttackController : p_Base
         {
             //Start Mutilate
             mutilateStartTime = Time.time;
-            attackState = e_AttackState.Casting;
+            attackState = e_AttackState.Mutilating;
         }
         else if (mutilateStartTime != null)
         {
-            if (C.MutilateHeld && mutilateStartTime + mutilateCastTime > Time.time)
+            if (C.MutilateHeld)
             {
-                //Mutilate progress
-                PostProcess.SetMutilatePP((Time.time - (float)mutilateStartTime) / mutilateCastTime);
-            }
-            else
-            {
-                //If mutilate was ended
-                if ((float)mutilateStartTime + mutilateCastTime < Time.time)
+                if (mutilateStartTime + mutilateCastTime > Time.time)
                 {
-                    PB.AddHealth(-mutilateHealthCost);
-                    PB.AddBlood(mutilateBloodGain);
-                    PB.AddMadness(mutilateMadnessGain);
-
-                    mutilateStartTime = Mathf.Infinity;
-
-                    PostProcess.SetMutilatePP(0);
-                    FX.SpawnHitFX(BodyRaycastOrigin.position + Visual.forward * BodyColl.radius, Visual.forward, transform);
+                    //Mutilate progress
+                    PostProcess.SetMutilatePP((Time.time - (float)mutilateStartTime) / mutilateCastTime);
                 }
+                else if(mutilateStartTime + mutilateCastTime + mutilateRecoverTime > Time.time)
+                {
+                    //Reset mutilate
+                    if (attackState != e_AttackState.MutilateRecover)
+                    {
+                        if (PB.CurHealth > mutilateHealthCost)
+                        {
+                            PB.AddHealth(-mutilateHealthCost);
+                            PB.AddBlood(mutilateMinBloodGain + mutilateBloodGain);
+                        }
+                        else
+                        {
+                            if (PB.CurHealth > 1)
+                            {
+                                PB.AddBlood(mutilateBloodGain * ((PB.CurHealth - 1) / mutilateHealthCost));
+                                PB.AddHealth(-PB.CurHealth + 1);
+                            }
 
-                //Reset mutilate
-                mutilateStartTime = null;
-                attackState = e_AttackState.None;
+                            PB.AddBlood(mutilateMinBloodGain);
+                        }
+
+
+                        PB.AddMadness(mutilateMadnessGain);
+
+                        PostProcess.SetMutilatePP(0);
+                        FX.SpawnHitFX(BodyRaycastOrigin.position + Visual.forward * BodyColl.radius, Visual.forward, transform);
+                        attackState = e_AttackState.MutilateRecover;
+                    }
+                }
+                else
+                {
+                    PostProcess.SetMutilatePP(0);
+                    attackState = e_AttackState.None;
+                    mutilateStartTime = null;
+                }
+            }
+            else if (attackState != e_AttackState.MutilateRecover || (float)mutilateStartTime + mutilateCastTime + mutilateRecoverTime <= Time.time)
+            {
                 PostProcess.SetMutilatePP(0);
+                attackState = e_AttackState.None;
+                mutilateStartTime = null;
             }
         }
     }

@@ -51,7 +51,8 @@ public class p_MovementController : p_Base
     [SerializeField] float a_AutoBrake;
     
     [Header("Jump & Dash parameters")]
-    [SerializeField] float jumpSpeed;
+    [SerializeField] float jumpHorizontalMinSpeed;
+    [SerializeField] float jumpVerticalSpeed;
     [SerializeField] float jumpCooldown;
     [SerializeField] float dashMinSpeed;
     [SerializeField] float dashPeakSpeed;
@@ -371,7 +372,9 @@ public class p_MovementController : p_Base
         //Jump
         if (C.Jump && JumpUp)
         {
-            R.velocity = R.velocity.SetY(jumpSpeed);
+            float jumpHSpeed = jumpHorizontalMinSpeed > R.velocity.SetY(0).magnitude ? jumpHorizontalMinSpeed : R.velocity.SetY(0).magnitude;
+            R.velocity = MoveDirection * jumpHSpeed;
+            R.velocity = R.velocity.SetY(jumpVerticalSpeed);
             lastJumpTime = Time.time;
 
             Grounded = false;
@@ -390,7 +393,7 @@ public class p_MovementController : p_Base
             if (Sprinting)
                 oldSprinting = true;
 
-            SendMessage("OnDash");
+            SendMessage("OnDash", SendMessageOptions.DontRequireReceiver);
         }
     }
     void InAirMovementHandler()

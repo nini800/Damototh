@@ -20,7 +20,7 @@ public class p_Controller : MonoBehaviour
     ControllerButton lightAttackButton = ControllerButton.RightBumper;
     ControllerButton heavyAttackButton = ControllerButton.RightTrigger;
 
-    ControllerButton lockButton = ControllerButton.LeftTrigger;
+    ControllerButton lockButton = ControllerButton.RightClick;
     KeyCode lockKey = KeyCode.A;
 
 

@@ -27,12 +27,17 @@ public class AttackControllerEditor : Editor
 
         EditorGUILayout.LabelField("Mutilate", EditorStyles.boldLabel);
         ac.mutilateCastTime = EditorGUILayout.FloatField("Cast Time", ac.mutilateCastTime);
+        ac.mutilateRecoverTime = EditorGUILayout.FloatField("Recover Time", ac.mutilateRecoverTime);
         ac.mutilateHealthCost = EditorGUILayout.FloatField("Health Cost", ac.mutilateHealthCost);
+        ac.mutilateMinBloodGain = EditorGUILayout.FloatField("Min Blood Gain", ac.mutilateMinBloodGain);
         ac.mutilateBloodGain = EditorGUILayout.FloatField("Blood Gain", ac.mutilateBloodGain);
         ac.mutilateMadnessGain = EditorGUILayout.FloatField("Madness Gain", ac.mutilateMadnessGain);
 
         EditorGUILayout.LabelField("Lock", EditorStyles.boldLabel);
         ac.lockRange = EditorGUILayout.FloatField("Range", ac.lockRange);
+
+        EditorGUILayout.LabelField("Blood Thresholds", EditorStyles.boldLabel);
+        ac.strongBloodThreshold = EditorGUILayout.FloatField("High blood threshold", ac.strongBloodThreshold);
 
 
         EditorUtility.SetDirty(ac);
@@ -85,6 +90,7 @@ public class AttackControllerEditor : Editor
             att.Name = EditorGUILayout.TextField("Name", att.Name);
             att.AttackInput = (PlayerAttackStats.AttackInputType)EditorGUILayout.EnumPopup("Attack Input", att.AttackInput);
             att.MoveInput = (p_MovementController.e_MovementState)EditorGUILayout.EnumFlagsField("Move Input", att.MoveInput);
+            att.weight = (AttackStats.AttackWeightType)EditorGUILayout.EnumPopup("Attack Weight", att.weight);
             EditorGUILayout.Separator();
             att.damages = EditorGUILayout.FloatField("Damages", att.damages);
             att.knockback = EditorGUILayout.Vector3Field("Knockback", att.knockback);
